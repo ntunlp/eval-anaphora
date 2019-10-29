@@ -8,27 +8,35 @@ This repository contains the data and source code of our paper "[Evaluating Pron
 * PyTorch 0.4 or higher
 * Python 3
 * AllenNLP
+* SQLite3
 ```
 
-### Dataset - Training/Development/Testing
-The training data consists of system translations vs. reference text from WMT 2011-15. There are two versions of the development data: one with unique system translations vs. reference, and one with unique noisy sentences vs. reference. Both are from WMT2014. The test data is the data used for the user studies in French, German, Russian and Chinese. 
+### Datasets - Training/Development/Testing
+The training data consists of system translations vs. reference text from WMT 2011-15. There are two versions of the development data: one with unique system translations vs. reference, and one with unique noisy sentences vs. reference. Both are from WMT2014. The test data is the data used for the user studies in French, German, Russian and Chinese. Both the original database and the processed pickle files are provided.
 
 Development and test data are uploaded here. The training data and a trained model are available at the following link: https://www.dropbox.com/sh/ol66hb2t3jcdeny/AADrfqm7fH1Cq8uiIvzcUuUra?dl=0
 
 ## How To Run
+You can use your own data from any other MT translations to train the evaluation measure. For training, ensure that the pickle file is serialized (each dictionary sample is written individually) and contains the data required; alternately, you can make corresponding changes in the code. Other paramaters can also be changed in `train.py`.
+
 * Training: <br>
 ```
 python train.py [training_data] [dev_data]
 ```
-Other paramaters can be changed in `train.py`.
+
 
 * Testing: <br>
 ```
 python test_trained_model.py [model] [test_data]
 ```
 
+## User Study
+Both the study data and the anonymized user responses for each language are provided. The Chinese/English data is separated; both these studies use the same data (English study done without source language) for comparison. The pickle file `pronoun_pair_list.pkl` contains the pronoun pairs of reference and error pronouns after filtering based on agreement (agreements and counts of responses included). 
+
 ### Test Suite
-The database with the pronoun test suite contains all the samples for all source languages from WMT2011-2017; filter by source language as required. Among other data, each sample provides the source sentence and two previous sentences for context, the equivalent for reference, and also which system translation error it originated from. This test suite is not filtered by the results of the user study to keep it unrestricted; if required, use the pronoun pairs from the keys in the `pronoun_pair_list.pkl` dictionary file, and filter using the `reference_pronoun` and `system_pronoun` fields. 
+The sqlite3 database with the pronoun test suite contains all the samples for all source languages from WMT2011-2017; filter by source language as required. Among other data, each sample provides the source sentence and two previous sentences for context, the equivalent for reference, and also which system translation error it originated from. This test suite is not filtered by the results of the user study to keep it unrestricted; if required, use the pronoun pairs from the keys in the `pronoun_pair_list.pkl` dictionary file, and filter using the `reference_pronoun` and `system_pronoun` fields. 
+
+
 
 ## Citation
 Please cite our paper if you found the resources in this repository useful.
